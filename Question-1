@@ -1,0 +1,45 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+ 
+/* Name of the class has to be "Main" only if the class is public. */
+class Ideone
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		// your code goes here
+		Scanner scn=new Scanner(System.in);
+		int n=scn.nextInt();
+		int[] arr=new int[n];
+		for(int i=0;i<n;i++){
+			arr[i]=scn.nextInt();
+		}
+		int target=scn.nextInt();
+		Map<Integer,List<Integer>> hmap=new HashMap<>();
+		for(int i=0;i<n;i++){
+			if(hmap.containsKey(arr[i])){
+				hmap.get(arr[i]).add(i);
+			}
+			else{
+				List<Integer> list=new ArrayList<>();
+				list.add(i);
+				hmap.put(arr[i],list);
+			}
+		}
+ 
+		for(Integer key:hmap.keySet()){
+			List<Integer> indexList=hmap.get(key);
+			int lastEle=indexList.get(indexList.size()-1);
+			indexList.remove(indexList.size()-1);
+			hmap.put(key,indexList);
+			if(hmap.containsKey(target-key) && (hmap.get(target-key)).size()>0){
+				int[] ansarr=new int[2];
+				ansarr[0]=lastEle;
+				ansarr[1]=hmap.get(target-key).get(0);
+				System.out.println(ansarr[0]+" "+ansarr[1]);
+				return;
+			}
+		}
+	   System.out.println("Target not achieved.");
+	}
+}
